@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="AddCurrencySuccess" xml:space="preserve">
+  <value>Currency added successfully</value>
+</data>
+<data name="UpdCurrencySuccess" xml:space="preserve">
+  <value>Currency updated successfully</value>
+</data>
+<data name="DelCurrencySuccess" xml:space="preserve">
+  <value>Currency deleted successfully</value>
+</data>
+<data name="CurrencyCodeExists" xml:space="preserve">
+  <value>Currency code already exists</value>
+</data>
+<data name="CurrencyIDNotFound" xml:space="preserve">
+  <value>Currency ID not found in the corresponding currency settings</value>
+</data>
+<data name="CurrencyNotExists" xml:space="preserve">
+  <value>Currency not exists</value>
+</data>
+<data name="CurrencyCodeExistsWithId" xml:space="preserve">
+  <value>Currency {0} already exists, it is associated with CurrencyId: {1}</value>
+</data>
+<data name="GetCurrencyDataSuccess" xml:space="preserve">
+  <value>Get Bpi currency data success!</value>
+</data>
+</root>

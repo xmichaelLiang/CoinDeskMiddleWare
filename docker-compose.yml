@@ -1,0 +1,27 @@
+﻿version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "!@#$%6yhn"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express" # 使用 Express 版本
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  api:
+    build: .
+    container_name: coindeskapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "8080:80"
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqlserverdata:
