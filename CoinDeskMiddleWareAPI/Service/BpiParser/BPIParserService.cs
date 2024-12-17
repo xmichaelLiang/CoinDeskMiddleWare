@@ -10,15 +10,18 @@ namespace CoinDeskMiddleWareAPI.Service.BpiParser
         public List<BPICurrencyModel> ParserBPIResult(Dictionary<string, BpiModel> bpis, List<CurrencyQueryResult> currencys, TimeModel timeModel)
         {
             List<BPICurrencyModel> bPICurrencyModels = new List<BPICurrencyModel>();
-            foreach (var currency in currencys)
+            foreach (var bpi in bpis)
             {
-                BpiModel bpiModel = bpis[currency.CurrencyCode];
-                if (bpiModel == null)
-                    continue;
+                 string bpiCurrencyCode=bpi.Key;
+                string currencyName = currencys.Where(c=>c.CurrencyCode == bpiCurrencyCode).Select(c=>c.Name).FirstOrDefault();
+
+                if (string.IsNullOrEmpty(currencyName) == true)
+                    currencyName = bpiCurrencyCode;
+                
                 BPICurrencyModel bPICurrencyModel = new BPICurrencyModel();
-                bPICurrencyModel.currencyCode = currency.CurrencyCode;
-                bPICurrencyModel.name = currency.Name;
-                bPICurrencyModel.rate = bpiModel.Rate_float;// Decimal.Parse(bpiModel.Rate);
+                bPICurrencyModel.currencyCode = bpiCurrencyCode;
+                bPICurrencyModel.name = currencyName;
+                bPICurrencyModel.rate = bpi.Value.Rate_float;
                 DateTime updAt = DateTime.Parse(timeModel.UpdatedISO);
                 bPICurrencyModel.updatedAt = updAt.ToString("yyyy/MM/dd HH:mm:ss");
                 bPICurrencyModels.Add(bPICurrencyModel);
