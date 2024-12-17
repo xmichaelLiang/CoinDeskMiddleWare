@@ -37,7 +37,7 @@ namespace CoinDeskMiddleWareAPI.Service.Currencys
             apiResultModel.message= _localizer["UpdCurrencySuccess"];
             List<CurrencyQueryResult> currencyQueryResults = await _currencyRepository.QueryCurrency(currencyUpd.CurrencyCode);
                if(currencyQueryResults.Count>0){
-                  var isExistCurrency = currencyQueryResults.Where(x=>x.CurrencyId!=currencyUpd.CurrencyId);
+                  var isExistCurrency = currencyQueryResults.Where(x=>x.CurrencyId!=currencyUpd.CurrencyId).FirstOrDefault();
                    if(isExistCurrency !=null)
                           return ProcessResult("409", _localizer["CurrencyCodeExistsWithId", currencyUpd.CurrencyCode, currencyUpd.CurrencyId]);
                }
@@ -50,7 +50,7 @@ namespace CoinDeskMiddleWareAPI.Service.Currencys
             string NewCurrency = JsonConvert.SerializeObject(currencyUpd);
             await AddCurrencyChgLog(currencyJson,NewCurrency,"Update",currencyUpd.UserID);
             currency.CurrencyCode=currencyUpd.CurrencyCode;
-            await AddCurrencyChgLog(currencyJson,"","Delete",currencyUpd.UserID);  
+          
              await _currencyRepository.UpdCurrency(currencyUpd);
              return apiResultModel;
          }
@@ -68,7 +68,7 @@ namespace CoinDeskMiddleWareAPI.Service.Currencys
                  apiResultModel apiResultModel = new apiResultModel();
                  apiResultModel.code="200";
                  apiResultModel.message=_localizer["DelCurrencySuccess"];
-                Currency currency=   await _currencyRepository.QueryCurrency(currencyDel.CurrencyId);
+                Currency currency=   await _currencyRepository.QueryCurrency(currencyDel.CurrencyId, currencyDel.CurrencyCode);
                 if(currency==null)
                     return ProcessResult("440",_localizer["CurrencyIDNotFound"]);
 

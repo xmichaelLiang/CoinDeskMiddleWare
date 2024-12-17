@@ -40,7 +40,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoinDesk API", Version = "v1" });
- 
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml"; c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     // Configure Swagger to use Bearer Token
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -134,12 +134,13 @@ if (builder.Environment.IsEnvironment("Docker"))
 }
 
 app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<CurrencyDbContext>();
-    dbContext.Database.Migrate();
+if (configuration["MigrationsDB"] == "Y") {
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<CurrencyDbContext>();
+        dbContext.Database.Migrate();
+    }
 }
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Docker"))
 {

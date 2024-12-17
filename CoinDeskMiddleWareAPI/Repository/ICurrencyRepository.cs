@@ -12,7 +12,8 @@ namespace CoinDeskMiddleWareAPI.Repository
          Task<List<CurrencyQueryResult>> QueryCurrency(string currencyCode="");
 
          Task<Currency> QueryCurrency(int currencyid);
-         Task<List<CurrencyQueryResult>> QueryCurrency(List<string> currencyCodes);
+        Task<Currency> QueryCurrency(int currencyid, string currencyCode);
+        Task<List<CurrencyQueryResult>> QueryCurrency(List<string> currencyCodes);
          Task UpdCurrency(CurrencyUpd currencyUpd);
          Task<bool>  DelCurrency(int CurrencyId);
          Task AddCurrency(Currency currency);

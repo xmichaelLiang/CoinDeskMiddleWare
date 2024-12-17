@@ -36,4 +36,10 @@
 <data name="GetCurrencyDataSuccess" xml:space="preserve">
   <value>Get Bpi currency data success!</value>
 </data>
+<data name="ComingSoon" xml:space="preserve">
+  <value>This function has not been implemented yet.</value>
+</data>
+<data name="UnexpectedError" xml:space="preserve">
+  <value>An unexpected error occurred. Please try again later.</value>
+</data>
 </root>

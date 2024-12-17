@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace CoinDeskMiddleWareAPI.MiddlerWare
 {
@@ -10,9 +11,13 @@ namespace CoinDeskMiddleWareAPI.MiddlerWare
     {
          
             private readonly RequestDelegate _next;
-            public ErrorHandlingMiddleWare(RequestDelegate next)
+           private readonly ILogger<ErrorHandlingMiddleWare> _logger;
+            private readonly IStringLocalizer _localizer;
+            public ErrorHandlingMiddleWare(RequestDelegate next, ILogger<ErrorHandlingMiddleWare> logger,IStringLocalizerFactory localizerFactory)
             {
                 _next = next;
+                _logger = logger;
+                _localizer = localizerFactory.Create("Localization", typeof(Program).Assembly.GetName().Name) ;
             }
 
             public async Task Invoke(HttpContext context)
@@ -23,17 +28,18 @@ namespace CoinDeskMiddleWareAPI.MiddlerWare
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "An unhandled exception has occurred. Request path: {Path}, Query string: {QueryString}", context.Request.Path, context.Request.QueryString);
                     await HandleExceptionAsync(context, ex);
                 }
             }
 
-            private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+            private  Task HandleExceptionAsync(HttpContext context, Exception exception)
             {
                 var code = HttpStatusCode.InternalServerError; // 500 if unexpected
                 var apiResultModel = new
                 {
                     code = code.ToString(),
-                    message = exception.Message,
+                    message = _localizer["UnexpectedError"],
                     data = (object)null
                 };
                 var result = Newtonsoft.Json.JsonConvert.SerializeObject(apiResultModel );

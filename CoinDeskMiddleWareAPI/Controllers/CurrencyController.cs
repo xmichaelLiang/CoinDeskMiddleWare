@@ -21,14 +21,16 @@ namespace CoinDeskMiddleWareAPI.Controllers
         {
             _currencyDataService = currencyDataService;
         }
-        
-            /// <summary>
-            /// 查詢幣別設定資訊
-            /// </summary>
-            /// <returns> 查詢結果</returns>
-            /// <response code="200">查詢成功</response>
-          [ProducesResponseType(typeof(apiResultModel), 200)]
-         [HttpPost("CurrQ001")]
+
+        /// <summary>
+        /// 查詢幣別設定資訊
+        /// </summary>
+        /// <returns> 查詢結果</returns>
+        /// <response code="200">查詢成功</response>
+        /// <response code="500">內部伺服器錯誤</response>
+        [ProducesResponseType(typeof(apiResultModel), 200)]
+        [ProducesResponseType(typeof(apiResultModel), 500)]
+        [HttpPost("CurrQ001")]
         public async Task<IActionResult> QueryCurrency()
         {
             
@@ -41,18 +43,20 @@ namespace CoinDeskMiddleWareAPI.Controllers
             return Ok(apiResultModel);
         }
 
-            /// <summary>
-            /// 更新幣別資訊
-            /// </summary>
-            /// <param name="currencyUpd">幣別更新資料</param>
-            /// <returns>更新結果</returns>
-            /// <response code="200">更新成功</response>
-            /// <response code="409">幣別代碼已存在</response>
-            /// <response code="440">幣別 ID 未找到</response>
+        /// <summary>
+        /// 更新幣別資訊
+        /// </summary>
+        /// <param name="currencyUpd">幣別更新資料</param>
+        /// <returns>更新結果</returns>
+        /// <response code="200">更新成功</response>
+        /// <response code="409">幣別代碼已存在</response>
+        /// <response code="440">幣別 ID 與 幣別Code 組合未找到</response>
+        /// <response code="500">內部伺服器錯誤</response>
           [HttpPost("CurrU001")]
           [ProducesResponseType(typeof(apiResultModel), 200)]
           [ProducesResponseType(typeof(apiResultModel), 409)]
           [ProducesResponseType(typeof(apiResultModel), 440)]
+          [ProducesResponseType(typeof(apiResultModel), 500)]
         public async Task<IActionResult> UpdCurrency(CurrencyUpd currencyUpd)
         {
 
@@ -62,16 +66,18 @@ namespace CoinDeskMiddleWareAPI.Controllers
 
           return StatusCode(Int32.Parse(apiResultModel1.code), apiResultModel1);
         }
-        
-            /// <summary>
-            /// 刪除幣別設定資訊
-            /// </summary>
-            /// <param name="currencydel">幣別刪除資料</param>
-            /// <returns>刪除結果</returns>
-            /// <response code="200">刪除成功</response>
-            /// <response code="440">幣別 ID 未找到</response>  
-          [ProducesResponseType(typeof(apiResultModel), 200)]
-          [ProducesResponseType(typeof(apiResultModel), 440)]
+
+        /// <summary>
+        /// 刪除幣別設定資訊
+        /// </summary>
+        /// <param name="currencydel">幣別刪除資料</param>
+        /// <returns>刪除結果</returns>
+        /// <response code="200">刪除成功</response>
+        /// <response code="440">幣別 ID 與 幣別Code 組合未找到</response>  
+        /// <response code="500">內部伺服器錯誤</response>
+        [ProducesResponseType(typeof(apiResultModel), 200)]
+        [ProducesResponseType(typeof(apiResultModel), 440)]
+        [ProducesResponseType(typeof(apiResultModel), 500)]
         [HttpPost("CurrD001")]
         public async Task<IActionResult> DelCurrency( CurrencyDel  currencydel)
         {
@@ -82,16 +88,18 @@ namespace CoinDeskMiddleWareAPI.Controllers
 
           return StatusCode(Int32.Parse(apiResultModel1.code), apiResultModel1);
         }
-       
-            /// <summary>
-            /// 新增幣別設定資訊
-            /// </summary>
-            /// <param name="currencyAdd">幣別新增資料</param>
-            /// <returns>新增結果</returns>
-            /// <response code="200">新增成功</response>
-            /// <response code="409">幣別代碼已存在</response>
-             [ProducesResponseType(typeof(apiResultModel), 200)]
-             [ProducesResponseType(typeof(apiResultModel), 409)]
+
+        /// <summary>
+        /// 新增幣別設定資訊
+        /// </summary>
+        /// <param name="currencyAdd">幣別新增資料</param>
+        /// <returns>新增結果</returns>
+        /// <response code="200">新增成功</response>
+        /// <response code="409">幣別代碼已存在</response>
+        /// <response code="500">內部伺服器錯誤</response>
+        [ProducesResponseType(typeof(apiResultModel), 200)]
+        [ProducesResponseType(typeof(apiResultModel), 409)]
+        [ProducesResponseType(typeof(apiResultModel), 500)]
         [HttpPost("CurrNew001")]
         public async Task<IActionResult> AddCurrency( CurrencyAdd  currencyAdd)
         {

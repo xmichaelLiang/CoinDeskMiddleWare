@@ -46,7 +46,7 @@ namespace CoinDeskMiddleWareAPI.Repository
                     CurrencyCode = c.CurrencyCode,
                     Name = c.Name,
                     CurrencyId = c.CurrencyId
-                })
+                }).OrderBy(c => c.CurrencyCode)
                 .ToListAsync();
                 return result;
             }
@@ -81,6 +81,13 @@ namespace CoinDeskMiddleWareAPI.Repository
                return await _currencyDbContext.Currencies
                 .Where(c => c.CurrencyId == currencyid)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<Currency> QueryCurrency(int currencyid, string currencyCode)
+        {
+            return await _currencyDbContext.Currencies
+             .Where(c => c.CurrencyId == currencyid && c.CurrencyCode == currencyCode)
+             .FirstOrDefaultAsync();
         }
 
         public async Task UpdCurrency(CurrencyUpd currencyUpd)

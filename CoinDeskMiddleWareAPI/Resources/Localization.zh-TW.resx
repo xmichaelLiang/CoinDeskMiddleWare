@@ -36,4 +36,10 @@
 <data name="GetCurrencyDataSuccess" xml:space="preserve">
   <value>查詢成功!</value>
 </data>
+<data name="ComingSoon" xml:space="preserve">
+  <value>功能尚在建構中...</value>
+</data>
+<data name="UnexpectedError" xml:space="preserve">
+  <value>發生未預期的錯誤。請稍後再試。</value>
+</data>
 </root>
